@@ -18,6 +18,7 @@ namespace SokobanAI2
         }
         public static SokobanProblem ConstructFromConsole()
         {
+            Console.WriteLine("Please input the sokoban map:");
             List<string> consoleInput = new List<string>();
             while(true)
             {
@@ -27,6 +28,13 @@ namespace SokobanAI2
                 consoleInput.Add(line);
             }
             return new SokobanProblem(consoleInput);
+        }
+        public static SokobanProblem ConstructFromFile(string filename)
+        {
+            string content = File.ReadAllText(filename);
+            char[] separators = new char[] {'\n', '\r'};
+            List<string> fileInput = content.Split(separators, StringSplitOptions.RemoveEmptyEntries).ToList();
+            return new SokobanProblem(fileInput);
         }
         private void GetProblemFromConsole(List<string> consoleInput, out SokobanMap map, out SokobanState state)
         {

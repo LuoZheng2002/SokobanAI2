@@ -4,19 +4,40 @@
     {
         static void Main(string[] args)
         {
-            List<string> consoleInput = new List<string>
+            string filename;
+            while (true)
             {
-                "      wwwwww",
-                "      w    w",
-                "  wwwww g  w",
-                "www  wwwg  w",
-                "w b  b  g ww",
-                "w pbb w g w ",
-                "ww    wwwww ",
-                " wwwwww     "
-            };
-            SokobanProblem problem = new SokobanProblem(consoleInput);
+                Console.WriteLine("Please input the text file name of a sokoban map (relative to the executable)");
+                filename = Console.ReadLine()!;
+                if (File.Exists(filename))
+                {
+                    break;
+                }
+                Console.WriteLine("The specified filename does not exist! Please input again.");
+            }
+
+            // Input Method 1: Construct from file
+            SokobanProblem problem = SokobanProblem.ConstructFromFile(filename);
+
+            // Input Method2: Construct from console
+            // SokobanProblem problem2 = SokobanProblem.ConstructFromConsole();
+
+            // Input Method3: Construct with hardcoded structure
+            //List<string> consoleInput = new List<string>
+            //{
+            //    "wwww  ",
+            //    "w gw  ",
+            //    "w  www",
+            //    "wBp  w",
+            //    "w  b w",
+            //    "w  www",
+            //    "wwww  "
+            //};
+            //SokobanProblem problem3 = new SokobanProblem(consoleInput);
+
             SokobanAI.Solve(problem, out List<List<BoxMove>> boxMoves, out List<List<Direction>> playerMoves);
+            
+            // Printing results
             Console.WriteLine("Box moves:");
             for(int i = 0;i < boxMoves.Count;i++)
             {
